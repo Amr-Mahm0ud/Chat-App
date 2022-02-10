@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24088202811",
+    "project_id": "chatingapp-d4e22",
+    "storage_bucket": "chatingapp-d4e22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24088202811:android:0f3fc65b76652b4ca1961e",
+        "android_client_info": {
+          "package_name": "com.example.hamam_zagl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24088202811-v5j0nmnetg0aa3cc9kipn0pb6l0mordk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY9UZShupGpNgpJ4o6k2lv7-C9XMNjU_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24088202811-v5j0nmnetg0aa3cc9kipn0pb6l0mordk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
