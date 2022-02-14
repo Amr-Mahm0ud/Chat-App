@@ -11,6 +11,8 @@ class User {
   });
 }
 
+Map<String, String> userData = {'name': '', 'email': '', 'password': ''};
+
 User user = User(
     email: 'amr@gmail.com',
     name: 'Amr Mahmoud',

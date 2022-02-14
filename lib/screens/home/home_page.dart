@@ -1,6 +1,7 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../components/chats/all_chats.dart';
+import '/components/chats/all_chats.dart';
 import 'all_people.dart';
 import '/models/user.dart';
 import 'search.dart';
@@ -49,7 +50,16 @@ class _HomePageState extends State<HomePage> {
                   : const Profile(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {},
+        onPressed: () {
+          FirebaseFirestore.instance
+              .collection('chats/mKTyq5wEbnzVcYpsEJUm/messages')
+              .snapshots()
+              .listen((event) {
+            event.docs.forEach((element) {
+              print(element['text']);
+            });
+          });
+        },
         child: const Icon(
           Icons.person_add_alt_1,
           color: Colors.white,

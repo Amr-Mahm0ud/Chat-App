@@ -39,6 +39,8 @@ dependencies:
   flutter_svg: ^1.0.3
   anim_search_bar: ^2.0.2
   flutter_slidable: ^1.2.0
+  firebase_auth: ^3.3.7
+
 
 dev_dependencies:
   flutter_test:

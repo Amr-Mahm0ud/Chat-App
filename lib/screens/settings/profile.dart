@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
@@ -5,6 +6,13 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('profile');
+    return Center(
+      child: TextButton(
+        child: const Text('logout'),
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+        },
+      ),
+    );
   }
 }

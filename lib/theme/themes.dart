@@ -13,6 +13,7 @@ class Themes {
     iconTheme: const IconThemeData(color: kContentColorLight),
     colorScheme: const ColorScheme.light(
       primary: kPrimaryColor,
+      secondary: kSecondaryColor,
       error: kErrorColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -32,6 +33,7 @@ class Themes {
     iconTheme: const IconThemeData(color: kContentColorDark),
     colorScheme: const ColorScheme.dark().copyWith(
       primary: kPrimaryColor,
+      secondary: kSecondaryColor,
       error: kErrorColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
