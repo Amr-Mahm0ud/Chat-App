@@ -1,6 +1,6 @@
 # hamam_zagl
 
-A new Flutter project.
+Chat App using flutter and firebase
 
 ## Getting Started
 
