@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hamam_zagl/screens/auth/auth_screen.dart';
+import 'package:hamam_zagl/models/user.dart';
 import 'package:hamam_zagl/screens/home/home_page.dart';
 import 'screens/welcome.dart';
 import 'theme/themes.dart';
@@ -11,6 +11,7 @@ import 'theme/themes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  getUserData();
   runApp(const MyApp());
 }
 
@@ -26,13 +27,11 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          Widget nextPage = const AuthScreen();
           if (snapshot.hasData) {
-            nextPage = const HomePage();
+            return const HomePage();
           } else {
-            nextPage = const WelcomeScreen();
+            return const WelcomeScreen();
           }
-          return nextPage;
         },
       ),
     );

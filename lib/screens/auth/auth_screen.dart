@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamam_zagl/models/user.dart';
-import 'package:hamam_zagl/screens/home/home_page.dart';
 import '/components/auth/signup_form.dart';
 import '/components/auth/signin_form.dart';
 
@@ -112,7 +111,7 @@ class _AuthScreenState extends State<AuthScreen>
               AnimatedPositioned(
                 duration: _duration,
                 top: _isSignIn ? _size.height * 0.7 : _size.height * 0.45,
-                left: _isSignIn ? _size.width * 0.22 : -_size.width * 0.165,
+                left: _isSignIn ? _size.width * 0.22 : -_size.width * 0.160,
                 child: _isLoading && _isSignIn
                     ? const Padding(
                         padding: EdgeInsets.only(left: 60.0),
@@ -146,7 +145,7 @@ class _AuthScreenState extends State<AuthScreen>
                                         .headline4!
                                         .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 40)
+                                            fontSize: 30)
                                     : Theme.of(context).textTheme.headline6!,
                                 child: Text(
                                   'Sign In'.toUpperCase(),
@@ -200,7 +199,7 @@ class _AuthScreenState extends State<AuthScreen>
                                         .headline4!
                                         .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 40)
+                                            fontSize: 30)
                                     : Theme.of(context).textTheme.headline6!,
                                 child: Text(
                                   'Sign Up'.toUpperCase(),
@@ -232,26 +231,29 @@ class _AuthScreenState extends State<AuthScreen>
   }
 
   void authentication() async {
-    UserCredential res;
     setState(() {
       _isLoading = true;
     });
     try {
       if (!_isSignIn) {
-        res = await _auth.createUserWithEmailAndPassword(
-            email: userData['email']!.trim(),
-            password: userData['password']!.trim());
+        await _auth.createUserWithEmailAndPassword(
+          email: userData.email.trim(),
+          password: userData.password.trim(),
+        );
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(res.user!.uid)
+            .doc(userData.email)
             .set({
-          'email': userData['email']!.trim(),
-          'password': userData['password']!.trim()
+          'email': userData.email.trim(),
+          'password': userData.password.trim(),
+          'name': userData.name.trim(),
+          'image': userData.image,
+          'status': userData.status,
+          'lastSeen': userData.lastSeen
         });
       } else {
-        res = await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: userData['email']!.trim(),
-            password: userData['password']!.trim());
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: userData.email.trim(), password: userData.password.trim());
       }
     } on FirebaseAuthException catch (e) {
       String error = '';

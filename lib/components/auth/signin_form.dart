@@ -33,7 +33,7 @@ class SignInForm extends StatelessWidget {
                   !value.contains('.com')) return 'enter a valid email';
             },
             onSaved: (newValue) {
-              userData['email'] = newValue!;
+              userData.email = newValue!;
             },
           ),
           const SizedBox(height: 10),
@@ -57,7 +57,7 @@ class SignInForm extends StatelessWidget {
               if (value!.isEmpty || value.length < 8) return 'wrong password';
             },
             onSaved: (newValue) {
-              userData['password'] = newValue!;
+              userData.password = newValue!;
             },
           ),
           const SizedBox(height: 10),

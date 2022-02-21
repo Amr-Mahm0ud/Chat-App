@@ -32,7 +32,7 @@ class SignUpForm extends StatelessWidget {
               if (value!.isEmpty) return 'Enter a valid name';
             },
             onSaved: (newValue) {
-              userData['name'] = newValue!;
+              userData.name = newValue!;
             },
           ),
           const SizedBox(height: 10),
@@ -58,7 +58,7 @@ class SignUpForm extends StatelessWidget {
                   !value.contains('.com')) return 'enter a valid email';
             },
             onSaved: (newValue) {
-              userData['email'] = newValue!;
+              userData.email = newValue!;
             },
           ),
           const SizedBox(height: 10),
@@ -85,7 +85,7 @@ class SignUpForm extends StatelessWidget {
               }
             },
             onSaved: (newValue) {
-              userData['password'] = newValue!;
+              userData.password = newValue!;
             },
           ),
           const Spacer(),

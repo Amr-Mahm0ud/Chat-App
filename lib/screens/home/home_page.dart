@@ -1,5 +1,4 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '/components/chats/all_chats.dart';
 import 'all_people.dart';
@@ -48,23 +47,20 @@ class _HomePageState extends State<HomePage> {
               : _currentIndex == 2
                   ? const StoriesPage()
                   : const Profile(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {
-          FirebaseFirestore.instance
-              .collection('chats/mKTyq5wEbnzVcYpsEJUm/messages')
-              .snapshots()
-              .listen((event) {
-            event.docs.forEach((element) {
-              print(element['text']);
-            });
-          });
-        },
-        child: const Icon(
-          Icons.person_add_alt_1,
-          color: Colors.white,
-        ),
-      ),
+      floatingActionButton: _currentIndex == 1 || _currentIndex == 3
+          ? null
+          : FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 1;
+                });
+              },
+              child: const Icon(
+                Icons.person_add_alt_1,
+                color: Colors.white,
+              ),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -88,10 +84,20 @@ class _HomePageState extends State<HomePage> {
                               .withOpacity(0.32),
                       width: 2.5),
                   shape: BoxShape.circle),
-              child: CircleAvatar(
-                radius: 14,
-                backgroundImage: AssetImage(user.image),
-              ),
+              child: userData.image.isEmpty
+                  ? CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.blueGrey[300],
+                      child: const Icon(
+                        Icons.person,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 14,
+                      backgroundImage: AssetImage(userData.image),
+                    ),
             ),
             label: 'Profile',
           ),
