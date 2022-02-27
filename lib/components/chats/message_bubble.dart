@@ -11,20 +11,28 @@ class MessageBubble extends StatefulWidget {
 }
 
 class _MessageBubbleState extends State<MessageBubble> {
-  // bool showTime = false;
+  bool showTime = false;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     bool isSender = widget.message['sender'] == userData.email;
+    Timestamp timeStamp = widget.message['time'];
+    int time = DateTime.now().difference(timeStamp.toDate()).inMinutes;
     return Row(
       mainAxisAlignment:
           isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         GestureDetector(
+          onTap: () {
+            setState(() {
+              showTime = !showTime;
+            });
+          },
           child: Container(
             decoration: BoxDecoration(
               color: widget.message['sender'] == userData.email
-                  ? Theme.of(context).colorScheme.secondary
+                  ? Theme.of(context).colorScheme.primary
                   : Theme.of(context).primaryColor.withOpacity(0.2),
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(20),
@@ -37,9 +45,10 @@ class _MessageBubbleState extends State<MessageBubble> {
                     : const Radius.circular(20),
               ),
             ),
-            constraints: const BoxConstraints(minWidth: 100, maxWidth: 350),
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            padding: const EdgeInsets.all(10),
+            constraints: BoxConstraints(
+                minWidth: size.width * 0.3, maxWidth: size.width * 0.85),
+            margin: const EdgeInsets.symmetric(vertical: 3),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,19 +62,26 @@ class _MessageBubbleState extends State<MessageBubble> {
                         .copyWith(fontSize: 16),
                   ),
                 ),
-                // if (showTime) const SizedBox(height: 5),
-                // if (showTime)
-                //   Text(
-                //     displayTime,
-                //     style: Theme.of(context)
-                //         .textTheme
-                //         .subtitle2!
-                //         .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
-                //   ),
               ],
             ),
           ),
         ),
+        if (showTime) ...[
+          const SizedBox(width: 5),
+          Text(
+            time == 0
+                ? 'now'
+                : time > 60
+                    ? '${(time / 60).floor()} hours'
+                    : time > 1440
+                        ? '${(time / 1440).floor()} days'
+                        : '$time min',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2!
+                .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
+          ),
+        ]
       ],
     );
   }

@@ -41,7 +41,7 @@ class _NewMessageState extends State<NewMessage> {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
-                    labelText: 'Write a message...',
+                    labelText: 'Message...',
                   ),
                   onChanged: (value) {
                     setState(() {

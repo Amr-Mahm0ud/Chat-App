@@ -30,7 +30,7 @@ class _AllMessagesState extends State<AllMessages> {
               ? const Center(child: Text('No messages yet'))
               : Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 7),
                   child: ListView(
                     reverse: true,
                     children: [
