@@ -31,6 +31,7 @@ class SignInForm extends StatelessWidget {
               if (value!.isEmpty ||
                   !value.contains('@') ||
                   !value.contains('.com')) return 'enter a valid email';
+              return null;
             },
             onSaved: (newValue) {
               userData.email = newValue!;
@@ -55,6 +56,7 @@ class SignInForm extends StatelessWidget {
             obscureText: true,
             validator: (value) {
               if (value!.isEmpty || value.length < 8) return 'wrong password';
+              return null;
             },
             onSaved: (newValue) {
               userData.password = newValue!;

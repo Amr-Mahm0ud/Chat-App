@@ -30,6 +30,7 @@ class SignUpForm extends StatelessWidget {
             keyboardType: TextInputType.name,
             validator: (value) {
               if (value!.isEmpty) return 'Enter a valid name';
+              return null;
             },
             onSaved: (newValue) {
               userData.name = newValue!;
@@ -56,6 +57,7 @@ class SignUpForm extends StatelessWidget {
               if (value!.isEmpty ||
                   !value.contains('@') ||
                   !value.contains('.com')) return 'enter a valid email';
+              return null;
             },
             onSaved: (newValue) {
               userData.email = newValue!;
@@ -83,6 +85,7 @@ class SignUpForm extends StatelessWidget {
               if (value!.isEmpty || value.length < 8) {
                 return 'password is too weak';
               }
+              return null;
             },
             onSaved: (newValue) {
               userData.password = newValue!;

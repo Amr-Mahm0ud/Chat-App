@@ -1,17 +1,15 @@
-// ignore_for_file: curly_braces_in_flow_control_structures
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hamam_zagl/models/user.dart';
-import 'package:hamam_zagl/screens/home/home_page.dart';
+import 'models/user.dart';
+import 'screens/home/home_page.dart';
 import 'screens/welcome.dart';
 import 'theme/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  getUserData();
+  await getUserData();
   runApp(const MyApp());
 }
 

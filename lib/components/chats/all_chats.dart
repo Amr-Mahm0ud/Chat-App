@@ -79,8 +79,6 @@ class _AllChatsState extends State<AllChats> {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('chats')
-            // .where('members', arrayContains: userData.email)
-            // .where('lastMes', isNotEqualTo: '')
             .orderBy('lastMesTime', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
@@ -91,6 +89,8 @@ class _AllChatsState extends State<AllChats> {
           } else {
             final docs = snapshot.data!.docs;
             docs.removeWhere((chat) => chat['lastMes'] == '');
+            docs.removeWhere((chat) => (chat['members'][0] != userData.email &&
+                chat['members'][1] != userData.email));
             return Expanded(
               child: docs.isEmpty
                   ? const Center(child: Text('You have no chats'))
@@ -185,12 +185,17 @@ class _AllChatsState extends State<AllChats> {
                                   },
                                   leading: CircleAvatar(
                                     radius: 25,
+                                    backgroundImage: user2['image'] == ''
+                                        ? null
+                                        : NetworkImage(user2['image']),
                                     backgroundColor: Colors.blueGrey[300],
-                                    child: const Icon(
-                                      Icons.person,
-                                      size: 40,
-                                      color: Colors.white,
-                                    ),
+                                    child: user2['image'] == ''
+                                        ? const Icon(
+                                            Icons.person,
+                                            size: 40,
+                                            color: Colors.white,
+                                          )
+                                        : null,
                                   ),
                                   title:
                                       Text(isYourChat ? 'You' : user2['name']),

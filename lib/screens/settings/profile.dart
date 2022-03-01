@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as cloud_storage;
 import 'package:flutter/material.dart';
-import 'package:hamam_zagl/models/user.dart';
+import '/models/user.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
@@ -15,6 +16,8 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final picker = ImagePicker();
+  File? image;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -28,7 +31,7 @@ class _ProfileState extends State<Profile> {
               child: Center(
                 child: CircleAvatar(
                   radius: size.width * 0.2,
-                  backgroundImage: userData.image == ''
+                  backgroundImage: userData.image.isEmpty
                       ? null
                       : NetworkImage(userData.image),
                   child: Align(
@@ -101,15 +104,15 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void buildBottomSheet(BuildContext context) {
+  void buildBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
       elevation: 5,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(ctx).scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       context: context,
-      builder: (context) => Padding(
+      builder: (_) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 25),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -119,7 +122,7 @@ class _ProfileState extends State<Profile> {
               padding: const EdgeInsets.only(left: 10.0, bottom: 10),
               child: Text(
                 'Profile Picture',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(ctx).textTheme.headline6,
               ),
             ),
             Row(
@@ -148,7 +151,8 @@ class _ProfileState extends State<Profile> {
                     icon: Icon(Icons.camera_alt_rounded,
                         color: Theme.of(context).primaryColor),
                     onPressed: () {
-                      pickImage(ImageSource.camera, context);
+                      pickImage(ImageSource.camera, ctx);
+                      Navigator.of(ctx).pop();
                     },
                   ),
                 ),
@@ -165,7 +169,26 @@ class _ProfileState extends State<Profile> {
     final XFile? pickedImage =
         await picker.pickImage(source: src, imageQuality: 50);
     if (pickedImage != null) {
-      File image = File(pickedImage.path);
+        image = File(pickedImage.path);
+      try {
+        cloud_storage.Reference ref = cloud_storage.FirebaseStorage.instance
+            .ref()
+            .child('users_images')
+            .child('${userData.email}.jpg');
+        await ref.putFile(image!);
+        final imgUrl = await ref.getDownloadURL();
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(userData.email)
+            .update({'image': imgUrl});
+        setState(() {
+          userData.image = imgUrl;
+        });
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.toString()),
+        ));
+      }
     }
   }
 }

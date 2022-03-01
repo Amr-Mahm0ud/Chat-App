@@ -24,20 +24,20 @@ class AllPeople extends StatelessWidget {
                   DateTime time = DateTime.parse(user['lastSeen'].toString());
                   int lastTime = DateTime.now().difference(time).inMinutes;
                   return ListTile(
-                    leading: user['image'].toString().isEmpty
-                        ? CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.blueGrey[300],
-                            child: const Icon(
+                    leading: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.blueGrey[300],
+                      backgroundImage: user['image'].toString().isEmpty
+                          ? null
+                          : NetworkImage(user['image']),
+                      child: user['image'].toString().isEmpty
+                          ? const Icon(
                               Icons.person,
                               size: 40,
                               color: Colors.white,
-                            ),
-                          )
-                        : CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage(user['image']),
-                          ),
+                            )
+                          : null,
+                    ),
                     title: Text(
                         user['email'] == userData.email ? 'You' : user['name']),
                     subtitle: Text(user['status']),

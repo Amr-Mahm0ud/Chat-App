@@ -15,11 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         title: Text(_currentIndex == 0
@@ -65,42 +67,13 @@ class _HomePageState extends State<HomePage> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: _currentIndex,
-        items: [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble), label: 'Chats'),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.people), label: 'People'),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.add_a_photo), label: 'Stories'),
+        items: const [
           BottomNavigationBarItem(
-            icon: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: _currentIndex == 3
-                          ? Theme.of(context).primaryColor
-                          : Theme.of(context)
-                              .iconTheme
-                              .color!
-                              .withOpacity(0.32),
-                      width: 2.5),
-                  shape: BoxShape.circle),
-              child: userData.image.isEmpty
-                  ? CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.blueGrey[300],
-                      child: const Icon(
-                        Icons.person,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                    )
-                  : CircleAvatar(
-                      radius: 14,
-                      backgroundImage: AssetImage(userData.image),
-                    ),
-            ),
-            label: 'Profile',
-          ),
+              icon: Icon(Icons.chat_bubble), label: 'Chats'),
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'People'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_a_photo), label: 'Stories'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Profile'),
         ],
         onTap: (newVal) {
           setState(() {
