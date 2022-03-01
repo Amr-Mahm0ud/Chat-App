@@ -58,14 +58,14 @@ class _NewMessageState extends State<NewMessage> {
           ),
         ),
         CircleAvatar(
-          backgroundColor: newMes.text.trim() == ''
+          backgroundColor: controller.text.isEmpty
               ? Theme.of(context).disabledColor
               : Theme.of(context).primaryColor,
           radius: 25,
           child: IconButton(
             color: Theme.of(context).iconTheme.color,
             icon: const Icon(Icons.send),
-            onPressed: newMes.text.trim() == '' ? null : sendMessage,
+            onPressed: controller.text.isEmpty ? null : sendMessage,
           ),
         )
       ],

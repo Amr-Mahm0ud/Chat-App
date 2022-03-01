@@ -121,7 +121,8 @@ class _AllChatsState extends State<AllChats> {
                             } else {
                               final user2 = snapshot2.data!.data()
                                   as Map<String, dynamic>;
-                              bool isYourChat = user2Id == userData.email;
+                              bool isYourChat =
+                                  user2['email'] == userData.email;
                               return Slidable(
                                 startActionPane: ActionPane(
                                   motion: const ScrollMotion(),
