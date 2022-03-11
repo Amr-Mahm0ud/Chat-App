@@ -247,7 +247,7 @@ class _AuthScreenState extends State<AuthScreen>
           'email': userData.email.trim(),
           'password': userData.password.trim(),
           'name': userData.name.trim(),
-          'image': userData.image,
+          'image': '',
           'status': userData.status,
           'lastSeen': userData.lastSeen
         });

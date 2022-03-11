@@ -199,7 +199,15 @@ class _AllChatsState extends State<AllChats> {
                                   ),
                                   title:
                                       Text(isYourChat ? 'You' : user2['name']),
-                                  subtitle: Text(docs[index]['lastMes']),
+                                  subtitle: Text(
+                                      docs[index]['lastMes'].toString().length >
+                                              27
+                                          ? docs[index]['lastMes']
+                                                  .toString()
+                                                  .substring(0, 24) +
+                                              '...'
+                                          : docs[index]['lastMes'].toString(),
+                                      maxLines: 1),
                                   trailing: Text(lastTime == 0
                                       ? 'just now'
                                       : lastTime < 60

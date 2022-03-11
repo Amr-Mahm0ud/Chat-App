@@ -2,7 +2,6 @@ import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import '/components/chats/all_chats.dart';
 import 'all_people.dart';
-import '/models/user.dart';
 import 'search.dart';
 import '/screens/settings/profile.dart';
 

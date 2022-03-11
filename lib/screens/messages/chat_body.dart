@@ -22,11 +22,16 @@ class _ChatBodyState extends State<ChatBody> {
           children: [
             CircleAvatar(
               backgroundColor: Colors.blueGrey[300],
-              child: const Icon(
-                Icons.person,
-                size: 30,
-                color: Colors.white,
-              ),
+              backgroundImage: widget.chat['image'] == ''
+                  ? null
+                  : NetworkImage(widget.chat['image']),
+              child: widget.chat['image'] == ''
+                  ? const Icon(
+                      Icons.person,
+                      size: 30,
+                      color: Colors.white,
+                    )
+                  : null,
             ),
             const SizedBox(width: 5),
             Text(
@@ -46,9 +51,10 @@ class _ChatBodyState extends State<ChatBody> {
       ),
       body: Column(
         children: [
-          Expanded(child: AllMessages(widget.link)),Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: NewMessage(widget.link)),
+          Expanded(child: AllMessages(widget.link)),
+          Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: NewMessage(widget.link)),
         ],
       ),
     );
